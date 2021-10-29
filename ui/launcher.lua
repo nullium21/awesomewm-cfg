@@ -6,6 +6,11 @@ local beautiful = require("beautiful")
 
 local taglist = require("ui.taglist")
 
+local function placement(d, args)
+    args.offset = { x = -20, y = -8 }
+    return awful.placement.next_to(d, args)
+end
+
 local function launcher(state)
     local state = state or {}
 
@@ -33,8 +38,7 @@ end
 
 return function ()
     return awful.popup {
-        placement = awful.placement.next_to,
-        offset = { x = 0, y = -50 },
+        placement = placement,
 
         shape = gears.shape.rounded_rect,
 
