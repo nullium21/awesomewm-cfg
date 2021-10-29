@@ -4,51 +4,7 @@ local wibox = require("wibox")
 
 local beautiful = require("beautiful")
 
-local function taglist()
-    local w = {
-        layout = wibox.layout.fixed.vertical, spacing = 4,
-        { widget = wibox.widget.textbox, text = "tags", font = "Monospace 8" }
-    }
-
-    local alltags = awful.screen.focused().tags
-    for _,tag in pairs(alltags) do
-        local btn = wibox.widget {
-            widget = wibox.container.background, {
-                bg = tag.selected and beautiful.bg_focus or beautiful.bg_normal,
-                widget = wibox.container.place, halign = "center", {
-                    widget = wibox.container.margin, margins = 4, {
-                        widget = wibox.widget.textbox, text = tag.name, font = "Monospace 6"
-                    }
-                }
-            },
-        }
-
-        btn:connect_signal("mouse::enter", function (self)
-            self:set_bg(beautiful.bg_focus)
-            self:emit_signal("widget::redraw_needed")
-        end)
-
-        btn:connect_signal("mouse::leave", function (self)
-            if not tag.selected then
-                self:set_bg(beautiful.bg_normal)
-                self:emit_signal("widget::redraw_needed")
-            end
-        end)
-
-        btn:connect_signal("button::press", function (self)
-            tag:view_only()
-        end)
-
-        tag:connect_signal("property::selected", function ()
-            btn:set_bg(tag.selected and beautiful.bg_focus or beautiful.bg_normal)
-            btn:emit_signal("widget::redraw_needed")
-        end)
-
-        table.insert(w, btn)
-    end
-
-    return wibox.widget(w)
-end
+local taglist = require("ui.taglist")
 
 local function launcher(state)
     local state = state or {}
@@ -75,10 +31,10 @@ local function launcher(state)
     }
 end
 
-return function (wibar, offset)
+return function ()
     return awful.popup {
-        placement = awful.placement.next_to(wibar, { preferred_positions = {"top"} }),
-        offset = offset,
+        placement = awful.placement.next_to,
+        offset = { x = 0, y = -50 },
 
         shape = gears.shape.rounded_rect,
 
