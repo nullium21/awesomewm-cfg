@@ -14,17 +14,20 @@ return function (x, y, image, text)
             widget = wibox.container.margin,
             margins = 8,
 
-            forced_height = 48,
+            forced_height = 40,
 
             {
-                layout = wibox.layout.fixed.horizontal,
+                widget = wibox.container.place, valign = "center",
                 {
-                    widget = wibox.container.margin, right = 8,
-                    wibox.widget.imagebox(image, false),
-                },
-                {
-                    widget = wibox.container.place, halign = "center", valign = "center",
-                    { widget = wibox.widget.textbox, text = text, font = "Monospace 8" }
+                    layout = wibox.layout.fixed.horizontal,
+                    {
+                        widget = wibox.container.margin, right = 8,
+                        wibox.widget.imagebox(image, false),
+                    },
+                    {
+                        widget = wibox.container.place, halign = "center", valign = "center",
+                        { widget = wibox.widget.textbox, text = text, font = "Monospace 8" }
+                    }
                 }
             }
         }
