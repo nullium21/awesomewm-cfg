@@ -20,7 +20,7 @@ return function (scr)
     scr.launcher_btn:connect_signal("button::press", function (self, fwres)
         if (not scr.launcher) or (not scr.launcher.visible) then
             if not scr.launcher then
-                scr.launcher = launcher()
+                scr.launcher = launcher(scr)
             end
             
             scr.launcher.visible = true

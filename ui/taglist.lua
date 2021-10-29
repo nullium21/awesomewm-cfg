@@ -3,13 +3,13 @@ local wibox = require("wibox")
 
 local beautiful = require("beautiful")
 
-return function ()
+return function (scr)
     local w = {
         layout = wibox.layout.fixed.vertical, spacing = 4,
         { widget = wibox.widget.textbox, text = "tags", font = "Monospace 8" }
     }
 
-    local alltags = awful.screen.focused().tags
+    local alltags = scr.tags
     for _,tag in pairs(alltags) do
         local btn = wibox.widget {
             widget = wibox.container.background, {

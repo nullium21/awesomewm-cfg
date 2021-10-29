@@ -20,7 +20,7 @@ local function launcher(state)
         {
             layout = wibox.layout.fixed.horizontal, spacing = 24,
 
-            taglist(),
+            taglist(state.screen),
             {
                 layout = wibox.layout.fixed.vertical,
                 { widget = wibox.widget.textbox, text = "applications", font = "Monospace 8" },
@@ -36,12 +36,12 @@ local function launcher(state)
     }
 end
 
-return function ()
+return function (scr)
     return awful.popup {
         placement = placement,
 
         shape = gears.shape.rounded_rect,
 
-        widget = launcher()
+        widget = launcher({ screen = scr })
     }
 end
