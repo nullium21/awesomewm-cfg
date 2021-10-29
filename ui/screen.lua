@@ -9,9 +9,25 @@ local dock_handlers = require("ui.dock_handlers")
 
 local image_button = require("ui.image_button")
 
+local launcher = require("ui.launcher")
+
 return function (scr)
+    awful.tag({ "1", "2", "3", "4", "5", "6", "7", "8", "9" }, s, awful.layout.layouts[1])
+
     scr.launcher_btn = image_button(beautiful.awesome_icon, "launch")
     scr.settings_btn = image_button(beautiful.awesome_icon, "settings", { reverse = true })
+
+    scr.launcher_btn:connect_signal("button::press", function (self, fwres)
+        if (not scr.launcher) or (not scr.launcher.visible) then
+            if not scr.launcher then
+                scr.launcher = launcher(scr.wibar, { x = 0, y = -10 })
+            end
+            
+            scr.launcher.visible = true
+        else
+            scr.launcher.visible = false
+        end
+    end)
 
     scr.dock = dock({
         { beautiful.awesome_icon, "firefox" },
