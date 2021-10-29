@@ -12,7 +12,7 @@ local image_button = require("ui.image_button")
 local launcher = require("ui.launcher")
 
 return function (scr)
-    awful.tag({ "1", "2", "3", "4", "5", "6", "7", "8", "9" }, s, awful.layout.layouts[1])
+    awful.tag({ "1", "2", "3", "4", "5", "6", "7", "8", "9" }, scr, awful.layout.layouts[1])
 
     scr.launcher_btn = image_button(beautiful.awesome_icon, "launch")
     scr.settings_btn = image_button(beautiful.awesome_icon, "settings", { reverse = true })
