@@ -1,6 +1,8 @@
 local wibox = require("wibox")
 local gears = require("gears")
 
+local beautiful = require("beautiful")
+
 local image_button = require("ui.image_button")
 
 return function (button_data, handlers, screen)
@@ -23,7 +25,7 @@ return function (button_data, handlers, screen)
 
     local widget = wibox.widget {
         widget = wibox.container.background,
-        bg = "#c7c1b3", fg = "#000000",
+        bg = beautiful.bg_focus,
         shape = gears.shape.rounded_bar,
 
         { layout = wibox.layout.fixed.horizontal, table.unpack(buttons) }

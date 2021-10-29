@@ -24,7 +24,6 @@ return function (scr)
         y = 0,
         screen = scr,
         margins = 4,
-        bg = "#f1ebdd", fg = "#000000",
         shape = gears.shape.rounded_bar,
         widget = {
             widget = wibox.container.margin, left = 0, right = 0, top = 0, bottom = 0, {

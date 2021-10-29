@@ -1,6 +1,8 @@
 local wibox = require("wibox")
 local gears = require("gears")
 
+local beautiful = require("beautiful")
+
 return function (image, text, params)
     local params = params or {}
 
@@ -31,7 +33,7 @@ return function (image, text, params)
 
     local widget = wibox.widget {
         widget = wibox.container.background,
-        bg = "#c7c1b3", fg = "#000000",
+        bg = beautiful.bg_focus,
         shape = gears.shape.rounded_bar,
 
         make_children(false)
