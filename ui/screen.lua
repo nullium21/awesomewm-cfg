@@ -5,7 +5,7 @@ local wibox = require("wibox")
 local beautiful = require("beautiful")
 
 local dock = require("ui.dock")
-local dock_handlers = require("ui.dock_handlers")
+local dock_handlers = require("ui.dock.handlers")
 
 local image_button = require("ui.image_button")
 

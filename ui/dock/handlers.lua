@@ -1,4 +1,4 @@
-local popup = require("ui.dock_popup")
+local popup = require("ui.dock.popup")
 
 return function (screen)
     local _M = {}
