@@ -18,7 +18,9 @@ return function (args)
         widget = wibox.container.background, {
             widget = wibox.container.margin, margins = 4, {
                 layout = wibox.layout.fixed.vertical,
-                icon and { widget = wibox.widget.imagebox, image = icon, forced_width = 88, forced_height = 88 } or nil,
+                icon and { widget = wibox.container.place, halign = "center", {
+                    widget = wibox.widget.imagebox, image = icon, forced_width = 88, forced_height = 88 }
+                } or nil,
                 text and { widget = wibox.container.place, halign = "center", {
                     widget = wibox.widget.textbox, text = text, font = "Monospace 6" }
                 } or nil
@@ -30,9 +32,11 @@ return function (args)
 
     hovered:set(false)
 
-    wgt:connect_signal("mouse::enter", function (self) hovered:set(true) end)
-    wgt:connect_signal("mouse::leave", function (self) hovered:set(false) end)
-    wgt:connect_signal("button::press", function (self) on_click() end)
+    if icon ~= nil or text ~= nil then
+        wgt:connect_signal("mouse::enter", function (self) hovered:set(true) end)
+        wgt:connect_signal("mouse::leave", function (self) hovered:set(false) end)
+        wgt:connect_signal("button::press", function (self) on_click() end)
+    end
 
     return wgt
 end

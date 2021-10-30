@@ -11,6 +11,11 @@ local image_button = require("ui.image_button")
 
 local launcher = require("ui.launcher")
 
+local function reposition_launcher(l, wibar)
+    l:move_next_to(wibar)
+    l.y = l.y - 8
+end
+
 return function (scr)
     awful.tag({ "1", "2", "3", "4", "5", "6", "7", "8", "9" }, scr, awful.layout.layouts[1])
 
@@ -21,8 +26,11 @@ return function (scr)
         if (not scr.launcher) or (not scr.launcher.visible) then
             if not scr.launcher then
                 scr.launcher = launcher(scr)
-                scr.launcher:move_next_to(scr.wibar)
-                scr.launcher.y = (scr.launcher.y - 8)
+
+                reposition_launcher(scr.launcher, scr.wibar)
+                scr.launcher:connect_signal("property::height", function ()
+                    reposition_launcher(scr.launcher, scr.wibar)
+                end)
             end
             
             scr.launcher.visible = true
