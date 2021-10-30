@@ -17,10 +17,12 @@ return function (scr)
     scr.launcher_btn = image_button(beautiful.awesome_icon, "launch")
     scr.settings_btn = image_button(beautiful.awesome_icon, "settings", { reverse = true })
 
-    scr.launcher_btn:connect_signal("button::press", function (self, fwres)
+    scr.launcher_btn:connect_signal("button::press", function (self, _, _, _, _, fwres)
         if (not scr.launcher) or (not scr.launcher.visible) then
             if not scr.launcher then
                 scr.launcher = launcher(scr)
+                scr.launcher:move_next_to(scr.wibar)
+                scr.launcher.y = (scr.launcher.y - 8)
             end
             
             scr.launcher.visible = true

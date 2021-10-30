@@ -29,7 +29,8 @@ end
 
 return function (scr)
     return awful.popup {
-        placement = placement,
+        preferred_positions = { "top" },
+        preferred_anchors = { "front" },
 
         shape = gears.shape.rounded_rect,
 
