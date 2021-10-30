@@ -12,7 +12,7 @@ return function (screen)
     function _M.on_item_menter(item_idx, item_el, item)
         if not popups[item_idx] then
             popups[item_idx] = popup(
-                item_el.x, screen.geometry.height - item_el.widget_height - 48 - 16,
+                item_el.x, screen.geometry.height - item_el.widget_height - 48 - 4,
                 item[1], item[2])
         end
 

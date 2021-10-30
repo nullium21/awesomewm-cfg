@@ -4,9 +4,7 @@ local gears = require("gears")
 
 return function (x, y, image, text)
     return awful.popup {
-        -- placement = awful.placement.next_to(item_el, { preferred_positions={"top"} }),
-        x = x,
-        y = y,
+        x = x, y = y,
 
         shape = gears.shape.rounded_rect,
 
