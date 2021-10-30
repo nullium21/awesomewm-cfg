@@ -5,6 +5,7 @@ local wibox = require("wibox")
 local beautiful = require("beautiful")
 
 local taglist = require("ui.taglist")
+local mode_selector = require("ui.launcher.mode_selector")
 
 local observable = require("util.observable")
 
@@ -17,48 +18,12 @@ local function applist(state)
     local selected_mode = observable.new()
     local all_modes = { "applications", "tasks", "sysmenu" }
 
-    local function mode_selector()
-        local main_wgt = { layout = wibox.layout.fixed.horizontal, spacing = 8 }
-
-        for _,mode in pairs(all_modes) do
-            local fg = beautiful.fg_disabled
-            local wgt = wibox.widget {
-                widget = wibox.container.background, fg = fg,
-                { widget = wibox.widget.textbox, text = mode, font = "Monospace 8" }
-            }
-
-            selected_mode:connect(function (new, old)
-                if new == mode then
-                    wgt:set_fg(beautiful.fg_normal)
-                else
-                    wgt:set_fg(beautiful.fg_disabled)
-                end
-            end)
-
-            wgt:connect_signal("mouse::enter", function ()
-                selected_mode:set(mode)
-            end)
-            wgt:connect_signal("mouse::leave", function ()
-                if selected_mode.value == mode then
-                    selected_mode.value = selected_mode.prev
-                end
-            end)
-            wgt:connect_signal("mouse::click", function ()
-                selected_mode:set(mode)
-            end)
-
-            table.insert(main_wgt, wgt)
-        end
-
-        return wibox.widget(main_wgt)
-    end
-
     selected_mode:connect(print)
     selected_mode:set("tasks")
 
     local w = {
         layout = wibox.layout.fixed.vertical,
-        mode_selector(),
+        mode_selector(selected_mode, all_modes),
         {
             layout = wibox.layout.grid,
             forced_num_cols = 4,
