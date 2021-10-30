@@ -4,7 +4,7 @@ local wibox = require("wibox")
 
 local beautiful = require("beautiful")
 
-local taglist = require("ui.taglist")
+local taglist = require("ui.launcher.taglist")
 local mode_selector = require("ui.launcher.mode_selector")
 local app_button = require("ui.launcher.app_button")
 
