@@ -15,7 +15,7 @@ end
 
 local function applist(state)
     local selected_mode = observable.new()
-    local all_modes = { "applications", "tasks" }
+    local all_modes = { "applications", "tasks", "sysmenu" }
 
     local function mode_selector()
         local main_wgt = { layout = wibox.layout.fixed.horizontal, spacing = 8 }
