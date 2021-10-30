@@ -2,15 +2,8 @@ local gears = require("gears")
 local awful = require("awful")
 local wibox = require("wibox")
 
-local beautiful = require("beautiful")
-
 local taglist = require("ui.launcher.taglist")
 local applist = require("ui.launcher.applist")
-
-local function placement(d, args)
-    args.offset = { x = -20, y = -8 }
-    return awful.placement.next_to(d, args)
-end
 
 local function launcher(state)
     local state = state or {}
