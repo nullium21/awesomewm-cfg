@@ -2,7 +2,7 @@ local wibox = require("wibox")
 local beautiful = require("beautiful")
 
 return function (selected_mode, all_modes)
-    local main_wgt = { layout = wibox.layout.fixed.horizontal, spacing = 8 }
+    local main_wgt = { layout = wibox.layout.fixed.horizontal, spacing = beautiful.launcher_mode_selector_spacing or 8 }
 
     for _,mode in pairs(all_modes) do
         local fg = beautiful.fg_disabled

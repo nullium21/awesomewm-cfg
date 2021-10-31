@@ -67,6 +67,16 @@ theme.menu_submenu_icon = themes_path.."default/submenu.png"
 theme.menu_height = dpi(15)
 theme.menu_width  = dpi(100)
 
+theme.launcher_grid_size = 96
+theme.launcher_grid_ncols = 4
+theme.launcher_grid_spacing = 8
+
+theme.launcher_spacing = 24
+
+theme.launcher_mode_selector_spacing = 8
+
+theme.launcher_taglist_spacing = 4
+
 -- You can add as many variables as
 -- you wish and access them by using
 -- beautiful.variable in your rc.lua

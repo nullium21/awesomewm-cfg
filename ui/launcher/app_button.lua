@@ -14,12 +14,14 @@ return function (args)
 
     local hovered = observable.new()
 
+    local icon_size = (beautiful.launcher_grid_size or 96) - 8
+
     local wgt = wibox.widget {
         widget = wibox.container.background, {
             widget = wibox.container.margin, margins = 4, {
                 layout = wibox.layout.fixed.vertical,
                 icon and { widget = wibox.container.place, halign = "center", {
-                    widget = wibox.widget.imagebox, image = icon, forced_width = 88, forced_height = 88 }
+                    widget = wibox.widget.imagebox, image = icon, forced_width = icon_size, forced_height = icon_size }
                 } or nil,
                 text and { widget = wibox.container.place, halign = "center", {
                     widget = wibox.widget.textbox, text = text, font = "Monospace 6" }

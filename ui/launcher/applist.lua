@@ -1,6 +1,8 @@
 local wibox = require("wibox")
 local awful = require("awful")
 
+local beaut = require("beautiful")
+
 local observable = require("util.observable")
 
 local app_button = require("ui.launcher.app_button")
@@ -19,10 +21,10 @@ return function ()
 
     local grid_template = {
         layout = wibox.layout.grid,
-        forced_num_cols = 4,
-        spacing = 8,
+        forced_num_cols = beaut.launcher_grid_ncols or 4,
+        spacing = beaut.launcher_grid_spacing or 8,
         homogeneous = true,
-        min_cols_size = 96
+        min_cols_size = beaut.launcher_grid_size or 96
     }
 
     local grid = wibox.widget(grid_template)

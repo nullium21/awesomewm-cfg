@@ -1,6 +1,7 @@
 local gears = require("gears")
 local awful = require("awful")
 local wibox = require("wibox")
+local beaut = require("beautiful")
 
 local taglist = require("ui.launcher.taglist")
 local applist = require("ui.launcher.applist")
@@ -9,10 +10,10 @@ local function launcher(state)
     local state = state or {}
 
     return wibox.widget {
-        widget = wibox.container.margin, margins = 24,
+        widget = wibox.container.margin, margins = beaut.launcher_spacing or 24,
 
         {
-            layout = wibox.layout.fixed.horizontal, spacing = 24,
+            layout = wibox.layout.fixed.horizontal, spacing = beaut.launcher_spacing or 24,
 
             taglist(state.screen),
             applist()

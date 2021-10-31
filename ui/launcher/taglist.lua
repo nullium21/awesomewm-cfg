@@ -4,7 +4,7 @@ local beautiful = require("beautiful")
 
 return function (scr)
     local w = {
-        layout = wibox.layout.fixed.vertical, spacing = 4,
+        layout = wibox.layout.fixed.vertical, spacing = beautiful.launcher_taglist_spacing or 4,
         { widget = wibox.widget.textbox, text = "tags", font = "Monospace 8" }
     }
 
@@ -14,7 +14,7 @@ return function (scr)
             widget = wibox.container.background, {
                 bg = tag.selected and beautiful.bg_focus or beautiful.bg_normal,
                 widget = wibox.container.place, halign = "center", {
-                    widget = wibox.container.margin, margins = 4, {
+                    widget = wibox.container.margin, margins = beautiful.launcher_taglist_spacing or 4, {
                         widget = wibox.widget.textbox, text = tag.name, font = "Monospace 6"
                     }
                 }
