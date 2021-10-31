@@ -1,4 +1,5 @@
 local wibox = require("wibox")
+local awful = require("awful")
 
 local observable = require("util.observable")
 
@@ -30,8 +31,14 @@ return function ()
         if not lists[mode] then
             local list = {}
             for _,item in pairs(getapplist(mode)) do
+                local on_click = item[3]
+
+                if type(item[3]) == "string" then
+                    on_click = function() awful.spawn(item[3]) end
+                end
+
                 local btn = app_button {
-                    icon = item[1], text = item[2], on_click = item[3]
+                    icon = item[1], text = item[2], on_click = on_click
                 }
 
                 table.insert(list, btn)
