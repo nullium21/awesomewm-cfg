@@ -25,6 +25,8 @@ return function (scr)
         preferred_positions = { "top" },
         preferred_anchors = { "front" },
 
+        ontop = true,
+
         shape = gears.shape.rounded_rect,
 
         widget = launcher({ screen = scr })
