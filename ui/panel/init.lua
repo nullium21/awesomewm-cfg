@@ -15,7 +15,7 @@ local function reposition(s)
 end
 
 return function (scr)
-    local dock_buttons = observable({})
+    local dock_buttons = observable.new()
 
     local launcher_btn = button(beaut.awesome_icon, "launch")
     local settings_btn = button(beaut.awesome_icon, "settings", { reverse = true })
@@ -32,9 +32,11 @@ return function (scr)
 
     -- settings_btn:connect_signal("button::press", function () settings.visible = not settings.visible end)
 
-    local dock = dock(dock_buttons.value, dhandlrs(scr), scr)
-    dock_buttons:connect(function ()
-        dock:emit_signal("dock::buttons", dock_buttons.value)
+    local dock = dock(nil, dhandlrs(scr), scr)
+    dock_buttons:connect(function (btns, old)
+        print(btns, old)
+
+        dock:emit_signal("dock::buttons", btns)
     end)
 
     scr.wibar = awful.wibar {
