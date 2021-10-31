@@ -3,7 +3,7 @@ local gears = require("gears")
 
 local beautiful = require("beautiful")
 
-local image_button = require("ui.image_button")
+local image_button = require("ui.panel.image_button")
 
 return function (button_data, handlers, screen)
     local handlers = handlers or {}
