@@ -34,8 +34,6 @@ return function (scr)
 
     local dock = dock(nil, dhandlrs(scr), scr)
     dock_buttons:connect(function (btns, old)
-        print(btns, old)
-
         dock:emit_signal("dock::buttons", btns)
     end)
 
