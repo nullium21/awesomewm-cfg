@@ -77,6 +77,10 @@ theme.launcher_mode_selector_spacing = dpi(8)
 
 theme.launcher_taglist_spacing = dpi(4)
 
+theme.launcher_dropdown_item_spacing = dpi(4)
+theme.launcher_dropdown_border_color = theme.bg_focus
+theme.launcher_dropdown_border_width = dpi(1)
+
 -- You can add as many variables as
 -- you wish and access them by using
 -- beautiful.variable in your rc.lua

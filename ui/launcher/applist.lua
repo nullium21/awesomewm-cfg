@@ -1,5 +1,6 @@
 local wibox = require("wibox")
 local awful = require("awful")
+local gears = require("gears")
 
 local beaut = require("beautiful")
 
@@ -7,6 +8,8 @@ local observable = require("util.observable")
 
 local app_button = require("ui.launcher.app_button")
 local mode_selector = require("ui.launcher.mode_selector")
+
+local popup = require("ui.launcher.app_popup")
 
 local function getapplist(mode)
     local ok, res = pcall(require, "ui.launcher.btnlists." .. mode)
@@ -36,12 +39,23 @@ return function ()
                 local on_click = item[3]
 
                 if type(item[3]) == "string" then
-                    on_click = function() awful.spawn(item[3]) end
+                    local cmd = item[3]
+                    on_click = function() awful.spawn(cmd) end
                 end
 
+                item[3] = on_click
+
                 local btn = app_button {
-                    icon = item[1], text = item[2], on_click = on_click
+                    icon = item[1], text = item[2]
                 }
+
+                btn:connect_signal("button::press", function (btn, lx, ly, mb, m, fwres)
+                    if mb == 1 then on_click()
+                    elseif mb == 3 then
+                        local xy = mouse.coords()
+                        popup(xy.x, xy.y, btn, item, mouse.screen)
+                    end
+                end)
 
                 table.insert(list, btn)
             end

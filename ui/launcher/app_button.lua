@@ -1,3 +1,4 @@
+local awful = require("awful")
 local wibox = require("wibox")
 local beautiful = require("beautiful")
 
@@ -11,6 +12,7 @@ return function (args)
     local icon = args.icon
     local text = args.text
     local on_click = args.on_click or function() end
+    local on_rclick = args.on_rclick or function() end
 
     local hovered = observable.new()
 
@@ -37,7 +39,7 @@ return function (args)
     if icon ~= nil or text ~= nil then
         wgt:connect_signal("mouse::enter", function (self) hovered:set(true) end)
         wgt:connect_signal("mouse::leave", function (self) hovered:set(false) end)
-        wgt:connect_signal("button::press", function (self) on_click() end)
+        wgt:connect_signal("button::press", function (...) on_click(...) end)
     end
 
     return wgt
