@@ -25,4 +25,6 @@ function observable:connect(obs)
     table.insert(self.observers, obs)
 end
 
+function observable:notify() self:set(self.value) end
+
 return setmetatable(observable, { __call = function (_, value) return observable.new(value) end })

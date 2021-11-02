@@ -5,10 +5,6 @@ local beaut = require("beautiful")
 
 local observable = require("util.observable")
 
-local function rm(t, cmp)
-    for i,v in pairs(t) do if cmp(v) then table.remove(t, i) end end
-end
-
 local function buttons(item, scr)
     print(item, scr)
     for k,v in pairs(item) do print(k,v) end
@@ -19,13 +15,13 @@ local function buttons(item, scr)
     end
 
     local pin_item = (not is_pinned)
-        and { "pin"  , function(item) local d=scr.dock_buttons d:set(gears.table.join(d.value, {item})) end }
-        or  { "unpin", function(item) local d=scr.dock_buttons rm(d.value, function(it) return it[2]==item[2] end) d:set(d.value) end}
+        and { "pin"  , function() local d=scr.dock_buttons d.value[item[2]] = item d:notify() end }
+        or  { "unpin", function() local d=scr.dock_buttons d.value[item[2]] = nil  d:notify() end }
 
     return {
-        { "launch", function(item) item[3]() end },
+        { "launch", function() item[3]() end },
         pin_item,
-        { "close", function (item, popup) popup.visible = false end }
+        { "close", function (_, popup) popup.visible = false end }
     }
 end
 

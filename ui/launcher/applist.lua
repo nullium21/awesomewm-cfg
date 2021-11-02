@@ -53,7 +53,7 @@ return function ()
                     if mb == 1 then on_click()
                     elseif mb == 3 then
                         local xy = mouse.coords()
-                        popup(xy.x, xy.y, btn, item, mouse.screen)
+                        popup(xy.x, xy.y, btn, gears.table.clone(item), mouse.screen)
                     end
                 end)
 
