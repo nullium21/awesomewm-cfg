@@ -5,6 +5,7 @@ local wibox = require("wibox")
 
 local button   = require("ui.panel.image_button")
 local launcher = require("ui.launcher")
+local settings = require("ui.settings")
 local dock     = require("ui.dock")
 local dhandlrs = require("ui.dock.handlers")
 
@@ -26,11 +27,11 @@ return function (scr)
 
     launcher_btn:connect_signal("button::press", function () launcher.visible = not launcher.visible end)
 
-    -- local settings     = settings()
-    -- settings:connect_signal("property::height" , reposition(scr))
-    -- settings:connect_signal("property::visible", reposition(scr))
+    local settings     = settings(scr)
+    settings:connect_signal("property::height" , reposition(scr))
+    settings:connect_signal("property::visible", reposition(scr))
 
-    -- settings_btn:connect_signal("button::press", function () settings.visible = not settings.visible end)
+    settings_btn:connect_signal("button::press", function () settings.visible = not settings.visible end)
 
     local dock = dock(nil, dhandlrs(scr), scr)
     scr.dock_buttons:connect(function (btns, old)
