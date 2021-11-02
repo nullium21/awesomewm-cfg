@@ -6,7 +6,7 @@ return function (screen)
     local popups = {}
 
     function _M.on_item_click(item_idx, item_el, item)
-
+        if type(item[3]) == "function" then item[3]() end
     end
 
     function _M.on_item_menter(item_idx, item_el, item)
