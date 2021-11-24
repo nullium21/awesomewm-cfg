@@ -20,7 +20,7 @@ end
 return function ()
     local selected_mode = observable.new()
     local all_modes = { "applications", "tasks", "sysmenu" }
-    local lists = {}
+    -- local lists = {}
 
     local grid_template = {
         layout = wibox.layout.grid,
@@ -33,7 +33,7 @@ return function ()
     local grid = wibox.widget(grid_template)
 
     selected_mode:connect(function (mode)
-        if not lists[mode] then
+        -- if not lists[mode] then
             local list = {}
             for _,item in pairs(getapplist(mode)) do
                 local on_click = item[3]
@@ -59,9 +59,9 @@ return function ()
 
                 table.insert(list, btn)
             end
-            lists[mode] = list
-        end
-        grid:set_children(lists[mode])
+            -- lists[mode] = list
+        -- end
+        grid:set_children(list)
     end)
 
     selected_mode:set("tasks")
