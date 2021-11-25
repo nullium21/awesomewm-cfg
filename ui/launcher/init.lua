@@ -39,22 +39,24 @@ local function launcher(state)
     }
 end
 
-return function (scr, custom_content)
+return function (scr, custom)
+    local custom = custom or {}
+
     local timed = rubato.timed {
-        duration = 1,
-        intro = 0.5,
-        easing = rubato.quadratic
+        duration = custom.anim_duration or 1,
+        intro = custom.anim_intro or 0.5,
+        easing = custom.anim_easing or rubato.quadratic
     }    
 
     local popup = awful.popup {
-        preferred_positions = { "top" },
-        preferred_anchors = { "front" },
+        preferred_positions =  custom.pos or { "top" },
+        preferred_anchors = custom.anchor or { "front" },
 
         ontop = true,
 
         shape = gears.shape.rounded_rect,
 
-        widget = custom_content or launcher({ screen = scr })
+        widget = custom.widget or launcher({ screen = scr })
     }
 
     local subscribed
