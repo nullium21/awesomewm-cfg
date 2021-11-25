@@ -12,7 +12,24 @@ local dhandlrs = require("ui.dock.handlers")
 local observable = require("util.observable")
 
 local function reposition(s)
-    return function (l) if l.visible then l:move_next_to(s.wibar); l.y = l.y - 8 end end
+    return function (l)
+        if not l.visible then return end
+
+        local orig_y = s.geometry.height
+        l:move_next_to(s.wibar); l.y = l.y - 8
+        local target_y = l.y
+        l.y = orig_y
+
+        l:emit_signal("animate::forward", { y = target_y })
+    end
+end
+
+local function change_popup_visible(popup)
+    return function () if popup.visible then
+        popup:emit_signal("animate::backward")
+    else
+        popup.visible = true
+    end end
 end
 
 return function (scr)
@@ -25,7 +42,7 @@ return function (scr)
     launcher:connect_signal("property::height" , reposition(scr))
     launcher:connect_signal("property::visible", reposition(scr))
 
-    launcher_btn:connect_signal("button::press", function () launcher.visible = not launcher.visible end)
+    launcher_btn:connect_signal("button::press", change_popup_visible(launcher))
 
     local settings     = settings(scr)
     settings:connect_signal("property::height" , reposition(scr))
