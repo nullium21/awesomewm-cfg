@@ -14,13 +14,13 @@ local function make_subscribed(widget, initial_y, target_y)
         initial = initial_y, target = target_y,
         widget = widget
     }, { __call = function (_, t)
-        print(widget.y, initial_y, target_y, diff, t)
         widget.y = initial_y + (diff * t)
+
         if t == 0 and widget.visible then widget.visible = false
         elseif t > 0 and not widget.visible then widget.visible = true
         end
+
         widget:emit_signal("widget::redraw_needed")
-        -- widget:set_y(initial_y + diff * t)
     end})
 end
 
@@ -46,7 +46,7 @@ return function (scr, custom)
         duration = custom.anim_duration or 1,
         intro = custom.anim_intro or 0.5,
         easing = custom.anim_easing or rubato.quadratic
-    }    
+    }
 
     local popup = awful.popup {
         preferred_positions =  custom.pos or { "top" },
@@ -61,22 +61,17 @@ return function (scr, custom)
 
     local subscribed
 
-    popup:connect_signal("animate::forward", function (wdg, target_pos)
-        print("animate::forward")
+    popup:connect_signal("animate::forward", function (_, target)
+        if subscribed then timed:unsubscribe(subscribed) end
 
-        if subscribed ~= nil then timed:unsubscribe(subscribed) end
-
-        local target_y = target_pos.y
-        subscribed = make_subscribed(popup, popup.y, target_y)
+        subscribed = make_subscribed(popup, popup.y, target.y)
         timed:subscribe(subscribed)
 
         timed.target = 1
     end)
 
     popup:connect_signal("animate::backward", function ()
-        print("animate::backward")
-
-        if subscribed ~= nil then timed.target = 0 end
+        if subscribed then timed.target = 0 end
     end)
 
     return popup
