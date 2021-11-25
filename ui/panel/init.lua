@@ -48,7 +48,7 @@ return function (scr)
     settings:connect_signal("property::height" , reposition(scr))
     settings:connect_signal("property::visible", reposition(scr))
 
-    settings_btn:connect_signal("button::press", function () settings.visible = not settings.visible end)
+    settings_btn:connect_signal("button::press", change_popup_visible(settings))
 
     local dock = dock(nil, dhandlrs(scr), scr)
     scr.dock_buttons:connect(function (btns, old)

@@ -8,12 +8,6 @@ local applist = require("ui.launcher.applist")
 
 local rubato = require("rubato")
 
-local timed = rubato.timed {
-    duration = 1,
-    intro = 0.5,
-    easing = rubato.quadratic
-}
-
 local function make_subscribed(widget, initial_y, target_y)
     local diff = target_y - initial_y
     return setmetatable({
@@ -45,7 +39,13 @@ local function launcher(state)
     }
 end
 
-return function (scr)
+return function (scr, custom_content)
+    local timed = rubato.timed {
+        duration = 1,
+        intro = 0.5,
+        easing = rubato.quadratic
+    }    
+
     local popup = awful.popup {
         preferred_positions = { "top" },
         preferred_anchors = { "front" },
@@ -54,7 +54,7 @@ return function (scr)
 
         shape = gears.shape.rounded_rect,
 
-        widget = launcher({ screen = scr })
+        widget = custom_content or launcher({ screen = scr })
     }
 
     local subscribed
