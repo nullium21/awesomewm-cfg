@@ -11,16 +11,22 @@ local dhandlrs = require("ui.dock.handlers")
 
 local observable = require("util.observable")
 
-local function reposition(s)
+local function reposition(s, side)
     return function (l)
         if not l.visible then return end
 
-        local orig_y = s.geometry.height
-        l:move_next_to(s.wibar); l.y = l.y - 8
-        local target_y = l.y
-        l.y = orig_y
+        local orig_x
+        if side=="left" then
+            orig_x = -l.width
+        elseif side=="right" then
+            orig_x = s.geometry.width
+        end
 
-        l:emit_signal("animate::forward", { y = target_y })
+        l:move_next_to(s.wibar); l.y = l.y - 8
+        local target_x = l.x
+        l.x = orig_x
+
+        l:emit_signal("animate::forward", { x = target_x })
     end
 end
 
@@ -39,14 +45,14 @@ return function (scr)
     local settings_btn = button(beaut.awesome_icon, "settings", { reverse = true })
 
     local launcher     = launcher(scr)
-    launcher:connect_signal("property::height" , reposition(scr))
-    launcher:connect_signal("property::visible", reposition(scr))
+    launcher:connect_signal("property::height" , reposition(scr, "left"))
+    launcher:connect_signal("property::visible", reposition(scr, "left"))
 
     launcher_btn:connect_signal("button::press", change_popup_visible(launcher))
 
     local settings     = settings(scr)
-    settings:connect_signal("property::height" , reposition(scr))
-    settings:connect_signal("property::visible", reposition(scr))
+    settings:connect_signal("property::height" , reposition(scr, "right"))
+    settings:connect_signal("property::visible", reposition(scr, "right"))
 
     settings_btn:connect_signal("button::press", change_popup_visible(settings))
 

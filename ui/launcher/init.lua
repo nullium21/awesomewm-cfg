@@ -8,13 +8,13 @@ local applist = require("ui.launcher.applist")
 
 local rubato = require("rubato")
 
-local function make_subscribed(widget, initial_y, target_y)
-    local diff = target_y - initial_y
+local function make_subscribed(widget, initial, target)
+    local diff = target - initial
     return setmetatable({
-        initial = initial_y, target = target_y,
+        initial = initial, target = target,
         widget = widget
     }, { __call = function (_, t)
-        widget.y = initial_y + (diff * t)
+        widget.x = initial + (diff * t)
 
         if t == 0 and widget.visible then widget.visible = false
         elseif t > 0 and not widget.visible then widget.visible = true
@@ -64,7 +64,7 @@ return function (scr, custom)
     popup:connect_signal("animate::forward", function (_, target)
         if subscribed then timed:unsubscribe(subscribed) end
 
-        subscribed = make_subscribed(popup, popup.y, target.y)
+        subscribed = make_subscribed(popup, popup.x, target.x)
         timed:subscribe(subscribed)
 
         timed.target = 1
