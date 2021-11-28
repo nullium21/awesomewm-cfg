@@ -15,6 +15,9 @@ local button_bg = {
 }
 
 return function (data)
+    local hoverable = data.hoverable
+    if hoverable==nil then hoverable = true end
+
     local icon_size = (beaut.settings_grid_size or 64) - 8
 
     local state = observable.new()
@@ -48,12 +51,17 @@ return function (data)
     state:connect(function (value) widget:set_bg(button_bg[value]) end)
     state:set("normal")
 
-    widget:connect_signal("mouse::enter", function()
-        if state.prev~="active" then state:set("hover") end
-    end)
-    widget:connect_signal("mouse::leave", function()
-        if state.prev~="hover" then state:set(state.prev) end
-    end)
+    widget:connect_signal("action::enable", function() state:set("active") end)
+    widget:connect_signal("action::disable", function() state:set("normal") end)
+
+    if hoverable then
+        widget:connect_signal("mouse::enter", function()
+            if state.prev~="active" then state:set("hover") end
+        end)
+        widget:connect_signal("mouse::leave", function()
+            if state.prev~="hover" then state:set(state.prev) end
+        end)
+    end
 
     if data.type == "toggle" then
         widget:connect_signal("button::press", function (_, _, _, mb, _, _)
@@ -63,9 +71,9 @@ return function (data)
             widget:emit_signal("action::toggle", new_value)
 
             if new_value == false then
-                state:set("normal"); widget:emit_signal("action::enable")
+                widget:emit_signal("action::enable")
             elseif new_value == true then
-                state:set("active"); widget:emit_signal("action::disable")
+                widget:emit_signal("action::disable")
             end
         end)
     elseif data.type == "click" then
