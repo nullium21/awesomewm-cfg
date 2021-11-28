@@ -33,13 +33,15 @@ return function (data)
         icon_wdg.forced_height = icon_size
     end
 
+    local content = data.content and {
+        layout = wibox.layout.fixed.horizontal,
+        icon_wdg, data.content
+    } or icon_wdg
+
     local widget = wibox.widget {
         shape = button_shape,
         widget = wibox.container.background, {
-            widget = wibox.container.margin, margins = 4, {
-                layout = wibox.layout.fixed.horizontal,
-                icon_wdg, data.content
-            }
+            widget = wibox.container.margin, margins = 4, content
         }
     }
 
