@@ -44,7 +44,14 @@ return function (scr, custom)
         widget = custom.widget or launcher({ screen = scr })
     }
 
-    animate(popup, timed)
+    animate {
+        widget = popup,
+        timed  = timed,
+        on_t = {
+            [0] = function (wdg) wdg.visible = false end,
+            [1] = function (wdg) wdg.visible = true  end
+        }
+    }
 
     return popup
 end

@@ -7,12 +7,14 @@ local function compute_diffs(fields)
     return diffs
 end
 
-return function (widget, timed, fields)
-    fields = fields or {}
+return function (params)
+    local fields = params.fields or {}
+    local widget = params.widget
+    local timed  = params.timed
+
+    local on_t_values = params.on_t or {}
 
     local diffs = compute_diffs(fields)
-
-    local on_t_values = {}
 
     local subscribed = false
     local subfn = function (t)
