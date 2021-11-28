@@ -71,9 +71,9 @@ return function (data)
             widget:emit_signal("action::toggle", new_value)
 
             if new_value == false then
-                widget:emit_signal("action::enable")
-            elseif new_value == true then
                 widget:emit_signal("action::disable")
+            elseif new_value == true then
+                widget:emit_signal("action::enable")
             end
         end)
     elseif data.type == "click" then
