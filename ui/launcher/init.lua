@@ -48,8 +48,8 @@ return function (scr, custom)
         widget = popup,
         timed  = timed,
         on_t = {
-            [0] = function (wdg) wdg.visible = false end,
-            [1] = function (wdg) wdg.visible = true  end
+            { "=", 0, function(wdg) wdg.visible = false end },
+            { ">", 0, function(wdg) wdg.visible = true  end }
         }
     }
 

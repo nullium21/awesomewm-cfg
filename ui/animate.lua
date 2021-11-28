@@ -28,8 +28,18 @@ return function (params)
             end
         end
 
-        if on_t_values[t] then
-            on_t_values[t](widget)
+        for _, handler in pairs(on_t_values) do
+            if     handler[1] ==  ">" and t  > handler[2] then
+                handler[3](widget, t)
+            elseif handler[1] ==  "=" and t == handler[2] then
+                handler[3](widget, t)
+            elseif handler[1] ==  "<" and t  < handler[2] then
+                handler[3](widget, t)
+            elseif handler[1] == "<=" and t <= handler[2] then
+                handler[3](widget, t)
+            elseif handler[1] == ">=" and t >= handler[2] then
+                handler[3](widget, t)
+            end
         end
     end
 
@@ -73,7 +83,13 @@ return function (params)
         subscribed = false
     end)
 
-    widget:connect_signal("animate::on_t", function (_, t, fn)
-        on_t_values[t] = fn
+    widget:connect_signal("animate::on_t", function (_, fn)
+        table.insert(on_t_values, fn)
+    end)
+
+    widget:connect_signal("animate::remove_on_t", function (_, fn)
+        for i,v in pairs(on_t_values) do
+            if v==fn then table.remove(on_t_values, i) end
+        end
     end)
 end
