@@ -26,7 +26,8 @@ local function reposition(s, side)
         local target_x = l.x
         l.x = orig_x
 
-        l:emit_signal("animate::forward", { x = target_x })
+        l:emit_signal("animate::field", "x", { from = orig_x, to = target_x })
+        l:emit_signal("animate::forward")
     end
 end
 

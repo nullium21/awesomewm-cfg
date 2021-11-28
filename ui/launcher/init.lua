@@ -7,22 +7,7 @@ local taglist = require("ui.launcher.taglist")
 local applist = require("ui.launcher.applist")
 
 local rubato = require("rubato")
-
-local function make_subscribed(widget, initial, target)
-    local diff = target - initial
-    return setmetatable({
-        initial = initial, target = target,
-        widget = widget
-    }, { __call = function (_, t)
-        widget.x = initial + (diff * t)
-
-        if t == 0 and widget.visible then widget.visible = false
-        elseif t > 0 and not widget.visible then widget.visible = true
-        end
-
-        widget:emit_signal("widget::redraw_needed")
-    end})
-end
+local animate = require("ui.animate")
 
 local function launcher(state)
     local state = state or {}
@@ -59,20 +44,7 @@ return function (scr, custom)
         widget = custom.widget or launcher({ screen = scr })
     }
 
-    local subscribed
-
-    popup:connect_signal("animate::forward", function (_, target)
-        if subscribed then timed:unsubscribe(subscribed) end
-
-        subscribed = make_subscribed(popup, popup.x, target.x)
-        timed:subscribe(subscribed)
-
-        timed.target = 1
-    end)
-
-    popup:connect_signal("animate::backward", function ()
-        if subscribed then timed.target = 0 end
-    end)
+    animate(popup, timed)
 
     return popup
 end
