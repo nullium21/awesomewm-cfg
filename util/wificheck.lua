@@ -5,7 +5,7 @@ return function (callback)
     local last_ssid
 
     local tmr = timer {
-        timeout = 10, call_now = true,
+        timeout = 5, call_now = true,
         autostart = true,
         callback = function ()
             spawn.easy_async({"iwgetid", "-r"}, function (out)
