@@ -36,7 +36,10 @@ return function (data)
     local widget = wibox.widget {
         shape = button_shape,
         widget = wibox.container.background, {
-            widget = wibox.container.margin, margins = 4, icon_wdg
+            widget = wibox.container.margin, margins = 4, {
+                layout = wibox.layout.fixed.horizontal,
+                icon_wdg, data.content
+            }
         }
     }
 
