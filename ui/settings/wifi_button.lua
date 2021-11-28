@@ -8,7 +8,7 @@ return function ()
     local textbox = wibox.widget { widget=wibox.widget.textbox, text="none", valign="center" }
     local btn = button { text="", type="toggle", content={
         widget=wibox.container.place, textbox
-    } }
+    }, hoverable=false }
 
     wificheck(function (data)
         if data.up then
