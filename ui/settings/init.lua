@@ -3,15 +3,10 @@ local beaut = require("beautiful")
 
 local launcher = require("ui.launcher")
 
-local buttons = {
-    { text="",                type="toggle" },
-    { text="",                type="toggle" },
-}
-
-local button = require('ui.settings.button')
+local layout = require('ui.settings.layout')
 
 return function (scr)
-    local settings_grid = {
+    local settings_grid = wibox.widget {
         layout = wibox.layout.grid,
         forced_num_cols = beaut.settings_grid_ncols or 4,
         forced_num_rows = beaut.settings_grid_nrows or 5,
@@ -21,15 +16,15 @@ return function (scr)
         spacing = beaut.settings_grid_spacing or 8
     }
 
-    for i,btn in pairs(buttons) do
-        table.insert(settings_grid, button(btn))
+    for _, item in pairs(layout) do
+        settings_grid:add_widget_at(item[1], item.y, item.x, item.h or 1, item.w or 1)
     end
 
     return launcher(scr, {
         widget = wibox.widget {
             widget = wibox.container.margin, margins = beaut.settings_spacing or 24,
 
-            wibox.widget(settings_grid)
+            settings_grid
         },
         anchor = { "back" }
     })
