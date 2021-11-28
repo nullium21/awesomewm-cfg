@@ -12,6 +12,8 @@ return function (widget, timed, fields)
 
     local diffs = compute_diffs(fields)
 
+    local on_t_values = {}
+
     local subscribed = false
     local subfn = function (t)
         for f,diff in pairs(diffs) do
@@ -22,6 +24,10 @@ return function (widget, timed, fields)
             else
                 widget[f] = value
             end
+        end
+
+        if on_t_values[t] then
+            on_t_values[t](widget)
         end
     end
 
@@ -63,5 +69,9 @@ return function (widget, timed, fields)
     widget:connect_signal("animate::unsubscribe", function ()
         timed:unsubscribe(subfn)
         subscribed = false
+    end)
+
+    widget:connect_signal("animate::on_t", function (_, t, fn)
+        on_t_values[t] = fn
     end)
 end
