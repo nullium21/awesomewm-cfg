@@ -2,9 +2,9 @@ local button = require "ui.settings.button"
 
 local wifi_btn = require "ui.settings.wifi_button"
 
-local blth_btn = button { text="", type="toggle" }
+local blth_btn = require "ui.settings.bluetooth_button"
 
 return {
     { x=1,y=1, w=3, wifi_btn() },
-    { x=4,y=1, w=1, blth_btn },
+    { x=4,y=1, w=1, blth_btn() },
 }
